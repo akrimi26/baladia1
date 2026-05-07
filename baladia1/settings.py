@@ -26,7 +26,11 @@ SECRET_KEY = 'django-insecure-9*z^7pi$+xvg_j6vn9-fvd$-q%9s%(5dr#-v#!e&a1(ook-0u#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'baladia.onrender.com',
+    '127.0.0.1',
+    'localhost',
+]
 
 
 # Application definition
