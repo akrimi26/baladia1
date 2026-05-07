@@ -1,19 +1,35 @@
-from django.shortcuts import redirect
-from .views import demandes, update_statut, dashboard , form_page, mes_demandes_page,admin_demandes_page, login_page, dashboard_page, suivi_page, suivi_demande
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from django.contrib import admin
-from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
+from django.urls import path
+
+from .views import (
+    demandes,
+    update_statut,
+    dashboard,
+    form_page,
+    mes_demandes_page,
+    admin_demandes_page,
+    login_page,
+    dashboard_page,
+    suivi_page,
+    suivi_demande
+)
+
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView
+)
 
 urlpatterns = [
     path('demandes/', demandes),
 
-    # 🔐 JWT
+    # JWT
     path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
     path('demandes/<int:id>/statut/', update_statut),
-    path('dashboard/', dashboard),  # 👈 الجديد
+
+    path('dashboard/', dashboard),
+
+    # Pages HTML
     path('form/', form_page),
     path('mes-demandes/', mes_demandes_page),
     path('login-page/', login_page),
@@ -21,5 +37,4 @@ urlpatterns = [
     path('suivi/', suivi_demande),
     path('suivi-page/', suivi_page),
     path('admin-demandes/', admin_demandes_page),
-    
 ]
