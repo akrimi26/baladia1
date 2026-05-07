@@ -1,4 +1,5 @@
 from django.urls import path
+from django.shortcuts import redirect
 from .views import demandes, update_statut, dashboard , form_page, mes_demandes_page,admin_demandes_page, login_page, dashboard_page, suivi_page, suivi_demande
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
@@ -17,4 +18,5 @@ urlpatterns = [
     path('suivi/', suivi_demande),
     path('suivi-page/', suivi_page),
     path('admin-demandes/', admin_demandes_page),
+     path('', lambda request: redirect('/api/form/')),
 ]
