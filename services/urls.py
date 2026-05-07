@@ -21,5 +21,5 @@ urlpatterns = [
     path('suivi/', suivi_demande),
     path('suivi-page/', suivi_page),
     path('admin-demandes/', admin_demandes_page),
-    path('', lambda request: redirect('/api/form/')),
+    
 ]
