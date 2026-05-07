@@ -1,0 +1,151 @@
+{% extends 'public_base.html' %}
+
+{% block title %}متابعة الطلب{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-7">
+
+        <div class="form-card">
+
+            <h2 class="text-center mb-4">
+                🔎 متابعة الطلب
+            </h2>
+
+            <form id="suiviForm">
+
+                <div class="mb-3">
+
+                    <label>رقم الطلب</label>
+
+                    <input
+                    type="number"
+                    name="id"
+                    class="form-control"
+                    required>
+
+                </div>
+
+                <div class="mb-4">
+
+                    <label>رقم بطاقة الهوية</label>
+
+                    <input
+                    type="text"
+                    name="cin"
+                    class="form-control"
+                    required>
+
+                </div>
+
+                <button class="btn btn-primary w-100">
+
+                    🔍 بحث
+
+                </button>
+
+            </form>
+
+            <div id="resultat" class="mt-4"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+document.getElementById('suiviForm').addEventListener('submit', function(e){
+
+    e.preventDefault();
+
+    let formData = new FormData(this);
+
+    fetch('/api/suivi/', {
+
+        method: 'POST',
+        body: formData
+
+    })
+
+    .then(res => res.json())
+
+    .then(data => {
+
+        let div = document.getElementById('resultat');
+
+        if(data.error){
+
+            div.innerHTML = `
+
+            <div class="alert alert-danger">
+
+                ❌ ${data.error}
+
+            </div>
+            `;
+
+            return;
+        }
+
+        let color = 'secondary';
+
+        if(data.statut == 'en_attente'){
+            color = 'warning';
+        }
+
+        if(data.statut == 'acceptee'){
+            color = 'success';
+        }
+
+        if(data.statut == 'refusee'){
+            color = 'danger';
+        }
+
+        div.innerHTML = `
+
+        <div class="card shadow border-0">
+
+            <div class="card-body">
+
+                <h4 class="mb-3">
+                    👤 ${data.nom} ${data.prenom}
+                </h4>
+
+                <p>
+                    <strong>📄 رقم الطلب:</strong>
+                    ${data.id}
+                </p>
+
+                <p>
+                    <strong>🛠 الخدمة:</strong>
+                    ${data.type_service}
+                </p>
+
+                <p>
+
+                    <strong>📌 الحالة:</strong>
+
+                    <span class="badge bg-${color}">
+
+                        ${data.statut}
+
+                    </span>
+
+                </p>
+
+            </div>
+
+        </div>
+        `;
+
+    });
+
+});
+
+</script>
+
+{% endblock %}

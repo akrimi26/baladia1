@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>لوحة التحكم</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+
+        body{
+            background:#f5f7fb;
+            font-family:Tahoma;
+        }
+
+        .card-dashboard{
+            border:none;
+            border-radius:20px;
+            color:white;
+            padding:25px;
+            box-shadow:0 4px 15px rgba(0,0,0,0.1);
+            transition:0.3s;
+        }
+
+        .card-dashboard:hover{
+            transform:translateY(-5px);
+        }
+
+        .number{
+            font-size:40px;
+            font-weight:bold;
+        }
+
+        .title{
+            font-size:20px;
+        }
+
+    </style>
+   
+
+</head>
+
+<body>
+
+<!-- Navbar -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+
+    <div class="container">
+
+        <a class="navbar-brand fw-bold" href="#">
+            📊 بلدية بئر الحفي
+        </a>
+
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <div class="ms-auto d-flex gap-2">
+
+                <a href="/api/form/"
+                   class="btn btn-light btn-sm">
+
+                    🏠 الرئيسية
+
+                </a>
+
+                <a href="/api/admin-demandes/"
+                   class="btn btn-warning btn-sm">
+
+                    📂 إدارة الطلبات
+
+                </a>
+
+                <button onclick="logout()"
+                        class="btn btn-danger btn-sm">
+
+                    🚪 Logout
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>
+
+<!-- Content -->
+
+<div class="container mt-5">
+
+    <h2 class="mb-4 text-center fw-bold">
+
+        📈 إحصائيات البلدية
+
+    </h2>
+    
+    <div class="row g-4">
+
+        <div class="col-md-4">
+
+            <div class="card-dashboard bg-primary">
+
+                <div class="title">
+                    📋 مجموع الطلبات
+                </div>
+
+                <div class="number" id="total">
+                    0
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card-dashboard bg-warning">
+
+                <div class="title">
+                    ⏳ في الانتظار
+                </div>
+
+                <div class="number" id="en_attente">
+                    0
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card-dashboard bg-success">
+
+                <div class="title">
+                    ✅ مقبولة
+                </div>
+
+                <div class="number" id="acceptee">
+                    0
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="card-dashboard bg-danger">
+
+                <div class="title">
+                    ❌ مرفوضة
+                </div>
+
+                <div class="number" id="refusee">
+                    0
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card-dashboard bg-info">
+
+                <div class="title">
+                    💧 مطالب الماء
+                </div>
+
+                <div class="number" id="eau">
+                    0
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="card-dashboard bg-secondary">
+
+                <div class="title">
+                    ⚡ مطالب الكهرباء
+                </div>
+
+                <div class="number" id="electricite">
+                    0
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+let token = localStorage.getItem('token');
+
+if(!token){
+
+    window.location.href = "/api/login-page/";
+
+}
+
+fetch('/api/dashboard/', {
+
+    headers: {
+
+        'Authorization': 'Bearer ' + token
+
+    }
+
+})
+
+.then(res => {
+
+    if(res.status == 401){
+
+        localStorage.removeItem('token');
+
+        window.location.href = "/api/login-page/";
+
+    }
+
+    return res.json();
+
+})
+
+.then(data => {
+
+    document.getElementById('total').innerText = data.total;
+
+    document.getElementById('en_attente').innerText = data.en_attente;
+
+    document.getElementById('acceptee').innerText = data.acceptee;
+
+    document.getElementById('refusee').innerText = data.refusee;
+
+    document.getElementById('eau').innerText = data.eau;
+
+    document.getElementById('electricite').innerText = data.electricite;
+
+});
+
+function logout(){
+
+    localStorage.removeItem('token');
+
+    window.location.href = "/api/login-page/";
+
+}
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+ 
+</body>
+
+</html>

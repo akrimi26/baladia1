@@ -1,0 +1,65 @@
+{% extends 'public_base.html' %}
+
+{% block title %}طلباتي{% endblock %}
+
+{% block content %}
+
+<h3>🔍 طلباتي</h3>
+
+<table class="table table-bordered table-striped">
+
+<thead>
+<tr>
+<th>الاسم</th>
+<th>الخدمة</th>
+<th>الحالة</th>
+<th>التاريخ</th>
+</tr>
+</thead>
+
+<tbody id="data"></tbody>
+
+</table>
+</div>
+
+<script>
+
+let token = localStorage.getItem('token');
+
+if (!token){
+
+    window.location.href = "/api/login-page/";
+
+}
+
+fetch('/api/demandes/', {
+
+    headers: {
+
+        'Authorization': 'Bearer ' + token
+
+    }
+
+})
+
+.then(res => {
+
+    if(res.status == 401){
+
+        window.location.href = "/api/login-page/";
+
+    }
+
+    return res.json();
+
+})
+
+.then(data => {
+
+    console.log(data);
+
+});
+
+</script>
+
+{% endblock %}

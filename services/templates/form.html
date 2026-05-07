@@ -1,0 +1,145 @@
+{% extends 'public_base.html' %}
+
+{% block title %}تقديم طلب{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-8">
+
+        <div class="form-card col-12">
+
+            <h3 class="text-center mb-4">
+                📝 تقديم مطلب جديد
+            </h3>
+
+            <form id="demandeForm">
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <label>الاسم</label>
+                        <input type="text" name="nom" class="form-control" required>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label>اللقب</label>
+                        <input type="text" name="prenom" class="form-control" required>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <label>رقم بطاقة التعريف الوطنية</label>
+                        <input type="text" name="cin" class="form-control" required>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label>رقم الهاتف</label>
+                        <input type="text" name="telephone" class="form-control" required>
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+                    <label>العنوان</label>
+                    <textarea name="adresse" class="form-control" rows="3"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label>نوع الخدمة</label>
+
+                    <select name="type_service" class="form-control">
+
+                        <option value="eau">💧 ماء</option>
+                        <option value="electricite">⚡ كهرباء</option>
+
+                    </select>
+                </div>
+
+                <hr>
+
+                <h5 class="mb-3">📂 الوثائق المطلوبة</h5>
+
+                <div class="mb-3">
+                    <label>نسخة بطاقة التعريف</label>
+                    <input type="file" name="copie_cin" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label>  Maps خريطة الموقع</label>
+                    <input type="file" name="plan_situation" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label>مثل هندسي لكل بناية داخل مثال التهيئة مساحتها تفوق 80متر مربع</label>
+                    <input type="file" name="plan_situation" class="form-control">
+                </div>
+
+                <div class="mb-4">
+                    <label>شهادة الملكية أو مايفيد الملكية</label>
+                    <input type="file" name="certificat_propriete" class="form-control">
+                </div>
+                <div class="mb-4">
+                    <label>شهادة ابراء</label>
+                    <input type="file" name="certificat_exonération" class="form-control">
+                </div>
+
+
+                <button class="btn btn-primary w-100">
+
+                    <i class="bi bi-send"></i>
+                    إرسال الطلب
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+document.getElementById('demandeForm').addEventListener('submit', function(e){
+
+    e.preventDefault();
+
+    let formData = new FormData(this);
+
+    fetch('/api/demandes/', {
+
+        method: 'POST',
+        body: formData
+
+    })
+
+    .then(res => res.json())
+
+  .then(data => {
+
+    alert(
+        "✅ تم إرسال الطلب بنجاح\n\n" +
+        "📌 رقم الطلب: " + data.id + "\n" +
+        "📋 حالة الطلب: في الانتظار"
+    );
+
+    this.reset();
+
+})
+
+    .catch(error => {
+
+        alert("❌ حدث خطأ");
+
+    });
+
+});
+
+</script>
+
+{% endblock %}
