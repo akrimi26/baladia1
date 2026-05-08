@@ -75,7 +75,7 @@
                 </div>
                 <div class="mb-3">
                     <label>مثل هندسي لكل بناية داخل مثال التهيئة مساحتها تفوق 80متر مربع</label>
-                    <input type="file" name="plan_situation" class="form-control">
+                    <input type="file" name="plan_architacturel" class="form-control">
                 </div>
 
                 <div class="mb-4">
@@ -84,7 +84,7 @@
                 </div>
                 <div class="mb-4">
                     <label>شهادة ابراء</label>
-                    <input type="file" name="certificat_exonération" class="form-control">
+                    <input type="file" name="certificat_exoneration" class="form-control">
                 </div>
 
 
@@ -119,14 +119,23 @@ document.getElementById('demandeForm').addEventListener('submit', function(e){
     })
 
     .then(res => res.json())
+.then(data => {
 
-  .then(data => {
+    console.log(data);
 
-    alert(
-        "✅ تم إرسال الطلب بنجاح\n\n" +
-        "📌 رقم الطلب: " + data.id + "\n" +
-        "📋 حالة الطلب: في الانتظار"
-    );
+    if(data.id){
+
+        alert(
+            "✅ تم إرسال الطلب بنجاح\n\n" +
+            "📌 رقم الطلب: " + data.id
+        );
+
+    } else {
+
+        alert(JSON.stringify(data));
+        console.log(data);
+
+    }
 
     this.reset();
 

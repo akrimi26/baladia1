@@ -113,8 +113,24 @@
     <br>
 
     ${
+      d.plan_architacturel
+        ? `<a href="${d.plan_architacturel}" target="_blank" class="btn btn-sm btn-secondary">
+              🏠 Certificat
+           </a>`
+        : `<span class="text-muted">لا يوجد Certificat</span>`
+    }
+    <br>
+    ${
       d.certificat_propriete
         ? `<a href="${d.certificat_propriete}" target="_blank" class="btn btn-sm btn-secondary">
+              🏠 Certificat
+           </a>`
+        : `<span class="text-muted">لا يوجد Certificat</span>`
+    }
+    <br>
+    ${
+      d.certificat_exonération
+        ? `<a href="${d.certificat_exonération}" target="_blank" class="btn btn-sm btn-secondary">
               🏠 Certificat
            </a>`
         : `<span class="text-muted">لا يوجد Certificat</span>`

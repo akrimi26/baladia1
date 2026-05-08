@@ -26,7 +26,7 @@ class Demande(models.Model):
     plan_situation = models.FileField(upload_to='documents/plans/', blank=True, null=True)
     plan_architacturel = models.FileField(upload_to='documents/plans/', blank=True, null=True)
     certificat_propriete = models.FileField(upload_to='documents/certificats/', blank=True, null=True)
-    certificat_exonération = models.FileField(upload_to='documents/certificats/', blank=True, null=True)
+    certificat_exoneration = models.FileField(upload_to='documents/certificats/', blank=True, null=True)
     type_service = models.CharField(max_length=20, choices=TYPE_SERVICE)
     statut = models.CharField(max_length=20, choices=STATUT_CHOICES, default='en_attente')
 
