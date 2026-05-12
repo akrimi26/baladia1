@@ -40,6 +40,7 @@
                   <th>العنوان</th>
                   <th>الخدمة</th>
                   <th>الحالة</th>
+                  <th>تاريخ الطلب</th>
                   <th>الوثائق</th>
                   <th>الإجراءات</th>
                 </tr>
@@ -89,6 +90,9 @@
                 </span>
 
             </td>
+            <td>
+    ${new Date(d.date_demande).toLocaleDateString()}
+</td>
 
            <td>
 
