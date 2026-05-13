@@ -10,7 +10,10 @@ from .views import (
     login_page,
     dashboard_page,
     suivi_page,
-    suivi_demande
+    suivi_demande,
+    telecharger_recu,
+   
+    
 )
 
 from rest_framework_simplejwt.views import (
@@ -37,4 +40,6 @@ urlpatterns = [
     path('suivi/', suivi_demande),
     path('suivi-page/', suivi_page),
     path('admin-demandes/', admin_demandes_page),
+    path('recu/<int:id>/',telecharger_recu),
+   
 ]

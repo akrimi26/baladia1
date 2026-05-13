@@ -33,5 +33,10 @@ class Demande(models.Model):
     description = models.TextField(blank=True)
     date_demande = models.DateTimeField(auto_now_add=True)
 
+    recu = models.FileField(
+    upload_to='recus/',
+    blank=True,
+    null=True
+)
     def __str__(self):
         return f"{self.nom} {self.prenom}"

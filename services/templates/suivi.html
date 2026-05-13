@@ -80,11 +80,8 @@ document.getElementById('suiviForm').addEventListener('submit', function(e){
         if(data.error){
 
             div.innerHTML = `
-
             <div class="alert alert-danger">
-
                 ❌ ${data.error}
-
             </div>
             `;
 
@@ -106,7 +103,6 @@ document.getElementById('suiviForm').addEventListener('submit', function(e){
         }
 
         div.innerHTML = `
-
         <div class="card shadow border-0">
 
             <div class="card-body">
@@ -126,16 +122,19 @@ document.getElementById('suiviForm').addEventListener('submit', function(e){
                 </p>
 
                 <p>
-
                     <strong>📌 الحالة:</strong>
 
                     <span class="badge bg-${color}">
-
                         ${data.statut}
-
                     </span>
-
                 </p>
+
+                <a href="/api/recu/${data.id}/"
+                   class="btn btn-success mt-3">
+
+                   Télécharger le reçu
+
+                </a>
 
             </div>
 

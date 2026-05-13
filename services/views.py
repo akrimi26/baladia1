@@ -1,4 +1,5 @@
 from django.shortcuts import render
+import base64
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Demande
@@ -6,6 +7,18 @@ from .serializers import DemandeSerializer
 from rest_framework.decorators import api_view, parser_classes, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
+from django.http import FileResponse
+import os
+import uuid
+import hashlib
+import qrcode
+from io import BytesIO
+from reportlab.lib.utils import ImageReader
+from io import BytesIO
+from django.http import FileResponse
+from django.core.files.base import ContentFile
+from PIL import Image, ImageDraw, ImageFont
+from django.http import HttpResponse
 # Create your views here.
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
@@ -131,3 +144,46 @@ def suivi_page(request):
     return render(request, 'suivi.html')
 def admin_demandes_page(request):
     return render(request, 'admin_demandes.html')
+@api_view(['GET'])
+def telecharger_recu(request, id):
+
+    try:
+        demande = Demande.objects.get(id=id)
+
+    except Demande.DoesNotExist:
+
+        return Response({
+            "error": "الطلب غير موجود"
+        }, status=404)
+
+    # UUID
+    unique_id = str(uuid.uuid4())
+
+    # HASH
+    secure_text = f"{demande.id}{demande.cin}{unique_id}"
+
+    secure_hash = hashlib.sha256(
+        secure_text.encode()
+    ).hexdigest()
+
+    # QR DATA
+    qr_data = f"""
+ID:{demande.id}
+UUID:{unique_id}
+HASH:{secure_hash}
+"""
+
+    qr = qrcode.make(qr_data)
+
+    buffer = BytesIO()
+
+    qr.save(buffer, format='PNG')
+
+    qr_base64 = base64.b64encode(
+        buffer.getvalue()
+    ).decode()
+
+    return render(request, 'recu.html', {
+        'demande': demande,
+        'qr_code': qr_base64
+    })

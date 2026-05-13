@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>وصل مطلب</title>
+
+    <style>
+
+        body{
+            font-family: Arial;
+            background:#f2f2f2;
+            padding:40px;
+        }
+
+        .recu{
+            background:white;
+            width:700px;
+            margin:auto;
+            padding:40px;
+            border-radius:10px;
+            box-shadow:0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1{
+            text-align:center;
+            margin-bottom:30px;
+        }
+
+        p{
+            font-size:20px;
+            margin:15px 0;
+        }
+
+        .qr{
+            text-align:left;
+            margin-top:30px;
+        }
+
+        .signature{
+            margin-top:50px;
+            font-size:22px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="recu">
+
+    <h1>وصل مطلب</h1>
+
+    <p><strong>رقم الطلب :</strong> {{ demande.id }}</p>
+
+    <p><strong>الاسم :</strong> {{ demande.nom }}</p>
+
+    <p><strong>اللقب :</strong> {{ demande.prenom }}</p>
+
+    <p><strong>رقم بطاقة الهوية :</strong> {{ demande.cin }}</p>
+
+    <p><strong>الهاتف :</strong> {{ demande.telephone }}</p>
+
+    <p><strong>العنوان :</strong> {{ demande.adresse }}</p>
+
+    <p><strong>الخدمة :</strong> {{ demande.type_service }}</p>
+
+    <p><strong>الحالة :</strong> {{ demande.statut }}</p>
+
+    <p><strong>التاريخ :</strong> {{ demande.date_demande }}</p>
+    
+
+        
+    
+    <div class="qr">
+    <p> Code QR
+</p>
+        <img src="data:image/png;base64,{{ qr_code }}" width="180">
+
+    </div>
+    
+   
+</div>
+
+</body>
+</html>
