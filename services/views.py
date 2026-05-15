@@ -13,7 +13,6 @@ import uuid
 import hashlib
 import qrcode
 from io import BytesIO
-from reportlab.lib.utils import ImageReader
 from io import BytesIO
 from django.http import FileResponse
 from django.core.files.base import ContentFile
