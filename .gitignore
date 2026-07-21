@@ -19,6 +19,14 @@ venv/
 # Static collected
 staticfiles/
 
+# Logs
+*.log
+gcm-diagnose.log
+
 # OS files
 .DS_Store
 Thumbs.db
+
+# Python cache
+*.pyo
+*.pyd
